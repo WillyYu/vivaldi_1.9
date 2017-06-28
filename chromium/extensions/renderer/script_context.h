@@ -228,6 +228,16 @@ class ScriptContext : public RequestSender::Source {
       v8::Local<v8::String> code,
       const RunScriptExceptionHandler& exception_handler);
 
+  // Willy, manage of instance_id and tab_id
+  void AddGuestViewAndTabId(int instance_id, int tab_id);
+  void RemoveGuestViewAndTabId(int instance_id, int tab_id);
+  bool HasGuestView(int instance_id);
+  int GetWindowId();
+  bool HasTabIdInContext(int tab_id);
+
+  bool NeedDispatchToContext(const std::string event_name,
+                            const base::ListValue* event_args,
+                            const base::DictionaryValue* filtering_info);
  private:
   class Runner;
 
@@ -276,6 +286,11 @@ class ScriptContext : public RequestSender::Source {
   std::unique_ptr<Runner> runner_;
 
   base::ThreadChecker thread_checker_;
+
+  // Willy, manage of instance_id and tab_id
+  std::vector<int> guest_view_ids_;
+  std::vector<int> tab_ids_;
+  int window_id_;
 
   DISALLOW_COPY_AND_ASSIGN(ScriptContext);
 };

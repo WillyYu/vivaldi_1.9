@@ -114,6 +114,15 @@ GuestViewInternalCustomBindings::GuestViewInternalCustomBindings(
       "RunWithGesture",
       base::Bind(&GuestViewInternalCustomBindings::RunWithGesture,
                  base::Unretained(this)));
+  // Willy, get the windowId and tabId that context hold
+  RouteFunction(
+      "OnElementAttached",
+      base::Bind(&GuestViewInternalCustomBindings::OnElementAttached,
+                 base::Unretained(this)));
+  RouteFunction(
+      "OnElementDetached",
+      base::Bind(&GuestViewInternalCustomBindings::OnElementDetached,
+                 base::Unretained(this)));
 }
 
 GuestViewInternalCustomBindings::~GuestViewInternalCustomBindings() {}

@@ -207,8 +207,16 @@ GuestViewContainer.prototype.weakWrapper = function(func) {
 // Implemented by the specific view type, if needed.
 GuestViewContainer.prototype.buildContainerParams = function() { return {}; };
 GuestViewContainer.prototype.willAttachElement = function() {};
-GuestViewContainer.prototype.onElementAttached = function() {};
-GuestViewContainer.prototype.onElementDetached = function() {};
+GuestViewContainer.prototype.onElementAttached = function() {
+  // Willy, get the windowId and tabId that context hold
+  var tabId = this.element.getAttribute("tab_id");
+  GuestViewInternalNatives.OnElementAttached(this.viewInstanceId, parseInt(tabId));
+};
+GuestViewContainer.prototype.onElementDetached = function() {
+  // Willy, remove the windowId and tabId from context
+  var tabId = this.element.getAttribute("tab_id");
+  GuestViewInternalNatives.OnElementDetached(this.viewInstanceId, parseInt(tabId));
+};
 GuestViewContainer.prototype.setupAttributes = function() {};
 
 // Registers the browser plugin <object> custom element. |viewType| is the

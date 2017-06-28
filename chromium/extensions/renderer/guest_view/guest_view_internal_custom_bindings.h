@@ -93,6 +93,12 @@ class GuestViewInternalCustomBindings : public ObjectBackedNativeHandler {
   // the fullscreen request to proceed.
   void RunWithGesture(
       const v8::FunctionCallbackInfo<v8::Value>& args);
+
+  // Willy, add to collect vivaldiWindowId and tabId
+  void OnElementAttached(
+      const v8::FunctionCallbackInfo<v8::Value>& args);
+  void OnElementDetached(
+      const v8::FunctionCallbackInfo<v8::Value>& args);
 };
 
 }  // namespace extensions
