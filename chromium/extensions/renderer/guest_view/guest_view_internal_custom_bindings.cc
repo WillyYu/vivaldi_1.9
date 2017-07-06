@@ -484,4 +484,32 @@ void GuestViewInternalCustomBindings::RunWithGesture(
       v8::Local<v8::Function>::Cast(args[0]), 0, nullptr);
 }
 
+// Willy, save vivaldiWindowId and tab to ScriptContext
+void GuestViewInternalCustomBindings::OnElementAttached(
+      const v8::FunctionCallbackInfo<v8::Value>& args) {
+  // There are three parameters.
+  CHECK(args.Length() == 2);
+  // View Instance ID.
+  CHECK(args[0]->IsInt32());
+  // Tab ID.
+  CHECK(args[1]->IsInt32());
+  int view_instance_id = args[0]->Int32Value();
+  int tab_id = args[1]->Int32Value();
+  context()->AddGuestViewAndTabId(view_instance_id, tab_id);
+}
+
+// Willy, remove vivaldiWindowId and tab to ScriptContext
+void GuestViewInternalCustomBindings::OnElementDetached(
+      const v8::FunctionCallbackInfo<v8::Value>& args) {
+  // There are two parameters.
+  CHECK(args.Length() == 2);
+  // View Instance ID.
+  CHECK(args[0]->IsInt32());
+  // Tab ID.
+  CHECK(args[1]->IsInt32());
+  int view_instance_id = args[0]->Int32Value();
+  int tab_id = args[1]->Int32Value();
+  context()->RemoveGuestViewAndTabId(view_instance_id, tab_id);
+}
+
 }  // namespace extensions
